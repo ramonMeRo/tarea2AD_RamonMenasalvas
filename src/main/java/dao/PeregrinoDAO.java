@@ -31,7 +31,7 @@ public class PeregrinoDAO {
 			ps.setString(4, peregrino.getNombre());
 			ps.setString(5, peregrino.getNacionalidad());
 			ps.executeUpdate();
-			
+
 			ps.close();
 			insertado = true;
 		} catch (SQLException e) {
@@ -39,7 +39,7 @@ public class PeregrinoDAO {
 		}
 		return insertado;
 	}
-	
+
 	public Set<Peregrino> obtenerPeregrinos() {
 		Set<Peregrino> listaPeregrinos = new HashSet<Peregrino>();
 		CarnetDAO carnet = new CarnetDAO();
@@ -59,13 +59,13 @@ public class PeregrinoDAO {
 			}
 			rs.close();
 			ps.close();
-			return listaPeregrinos;
-		}catch (SQLException e) {
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return listaPeregrinos;
 	}
-	
+
 	public Peregrino seleccionarPeregrino(long id) {
 		Peregrino peregrino = new Peregrino();
 		CarnetDAO carnet = new CarnetDAO();
@@ -76,20 +76,20 @@ public class PeregrinoDAO {
 			ps = con.prepareStatement("select * from peregrinos where id = ?");
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				peregrino.setId(rs.getLong("id"));
 				peregrino.setNombre(rs.getString("nombreCompleto"));
 				peregrino.setNacionalidad(rs.getString("nacionalidad"));
 				peregrino.setCarnet(carnet.obtenerCarnet(rs.getLong("idCarnet")));
-				
+
 			}
 			rs.close();
 			ps.close();
 			return peregrino;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 }

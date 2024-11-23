@@ -94,8 +94,5 @@ public class Estancia {
 				+ Parada + "]";
 	}
 	
-	public boolean esVip() {
-		return vip;
-	}
 
 }

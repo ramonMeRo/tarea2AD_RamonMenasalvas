@@ -75,7 +75,7 @@ public class UsuarioDAO {
 				String nombre = rs.getString("nombre");
 				String password = rs.getString("password");
 				String tipoPerfil = rs.getString("perfil");
-				Perfil perfilUs = (tipoPerfil.equals("parada")? Perfil.PARADA: Perfil.PEREGRINO); // Perfil.valueOf(tipoPerfil);
+				Perfil perfilUs = (tipoPerfil.equals("parada")? Perfil.PARADA: Perfil.PEREGRINO); 
 				Usuario usuario = new Usuario(idUs, nombre, password, perfilUs);
 				return usuario;
 			}
