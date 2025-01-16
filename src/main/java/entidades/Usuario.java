@@ -6,7 +6,7 @@ public class Usuario {
 	private long id;
 	private String nombre;
 	private String password;
-	private Perfil perfil;
+	private Perfil perfil = Perfil.INVITADO;
 
 	public Usuario() {
 	}

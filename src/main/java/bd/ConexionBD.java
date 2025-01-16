@@ -1,4 +1,4 @@
-package dao;
+package bd;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,5 +41,5 @@ public class ConexionBD {
 	public Connection getConnection() {
 		return con;
 	}
-	// comentario
+
 }

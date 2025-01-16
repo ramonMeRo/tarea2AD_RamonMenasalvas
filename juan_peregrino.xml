@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xml" href="test.xsl"?>
+<Carnet>
+	<id>19</id>
+	<fechaExp>2025-01-10</fechaExp>
+	<expedidoEn>Parada [id=23, nombre=vegadeo, region=b,
+		responsable=vegadeob, numPeregrinos=[]]</expedidoEn>
+	<peregrino>
+		<nombre>juan</nombre>
+		<nacionalidad />
+	</peregrino>
+	<hoy>2025-01-10</hoy>
+	<distanciaTotal>0.0</distanciaTotal>
+	<paradas />
+	<estancias />
+</Carnet>
