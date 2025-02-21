@@ -22,16 +22,15 @@ public class Utiles {
 	public static boolean existeParada(String nombre, char region) {
 		return ParadaDAO.getParadaDAO().compararParada(nombre, region);
 	}
-	
+
 	public static boolean existeParadaPorID(long id) {
 		Parada parada = null;
 		parada = ParadaDAO.getParadaDAO().seleccionarParada(id);
-		if(parada.getId() != null)
+		if (parada.getId() != null)
 			return true;
 		else
 			return false;
 	}
-	
 
 	public static boolean existeUsuario(String nombreUsuario) {
 		if (UsuarioDAO.getUsuarioDAO().obtenerUsuario(nombreUsuario) != null) {
@@ -39,39 +38,40 @@ public class Utiles {
 		}
 		return false;
 	}
-	
+
 	public static boolean existePeregrino(long id) {
 		Peregrino peregrino = PeregrinoDAO.getPeregrinoDAO().seleccionarPeregrino(id);
-		if(peregrino != null)
+		if (peregrino != null)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public static Peregrino obtenerPeregrino(long id) {
 		Peregrino peregrino = PeregrinoDAO.getPeregrinoDAO().seleccionarPeregrino(id);
 		return peregrino;
 	}
-	
+
 	public static boolean carnetPeregrinoSellado(Peregrino p, Usuario user, LocalDate fecha) {
-	Set<Visita> lista =	VisitadasDAO.getVisitadasDAO().visitasPeregrino(p);
-		Parada paradaActual =ParadaDAO.getParadaDAO().obtenerParada(user);
+		Set<Visita> lista = VisitadasDAO.getVisitadasDAO().visitasPeregrino(p);
+		Parada paradaActual = ParadaDAO.getParadaDAO().obtenerParada(user);
 		for (Visita visita : lista) {
-			if(visita.getIdParada() == paradaActual.getId() && visita.getFecha() == fecha)
+			if (paradaActual.getId().equals(visita.getIdParada()) && visita.getFecha().equals(fecha)
+					&& p.getId().equals(visita.getIdPeregrino()))
 				return true;
 		}
 		return false;
 	}
-	
-	public static Set<Parada> mostrarParadas(){
+
+	public static Set<Parada> mostrarParadas() {
 		Set<Parada> lista = ParadaDAO.getParadaDAO().obtenerParadas();
 		return lista;
 	}
-	
+
 	public static void mostrarPeregrinos() {
-		Set<Peregrino> lista =	PeregrinoDAO.getPeregrinoDAO().obtenerPeregrinos();
+		Set<Peregrino> lista = PeregrinoDAO.getPeregrinoDAO().obtenerPeregrinos();
 		for (Peregrino peregrino : lista) {
-			System.out.println("ID de peregrino: "+peregrino.getId()+ " nombre: "+peregrino.getNombre());
+			System.out.println("ID de peregrino: " + peregrino.getId() + " nombre: " + peregrino.getNombre());
 		}
 	}
 
@@ -89,10 +89,10 @@ public class Utiles {
 			}
 		}
 	}
-	
+
 	public static boolean leerBoolean() {
 		boolean ret;
-		
+
 		char resp;
 		do {
 			System.out.println("Pulse s para Sí o n para No");
@@ -109,7 +109,7 @@ public class Utiles {
 		}
 		return ret;
 	}
-	
+
 	public static Carnet conseguirCarnet(Peregrino p) {
 		return CarnetDAO.getCarnetDAO().obtenerCarnet(p.getId());
 	}

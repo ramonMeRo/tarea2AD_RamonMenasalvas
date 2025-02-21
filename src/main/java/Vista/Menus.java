@@ -15,7 +15,6 @@ import dao.ParadaDAO;
 import dao.PeregrinoDAO;
 import dao.UsuarioDAO;
 import dao.VisitadasDAO;
-import entidades.Carnet;
 import entidades.Parada;
 import entidades.Peregrino;
 import entidades.Perfil;
@@ -128,9 +127,8 @@ public class Menus {
 							nombreNacion = ControladorNaciones.ComprobarNacion(nacionalidad);
 							if (nombreNacion == null) {
 								System.out.println("La nacionalidad introducida no es valida, introduce otra:");
-								ControladorNaciones.MostrarNaciones();
-								nacionalidad = leer.nextInt();
-							}
+								
+							} else
 							valido = true;
 						} catch (InputMismatchException e) {
 							System.out.println("Solo se permiten numero enteros");
@@ -142,23 +140,23 @@ public class Menus {
 					valido = false;
 					Long paradaIni = 0l;
 					Parada paradaInicial = null;
-					
+
 					do {
 						try {
-							Set <Parada> paradas = Utiles.mostrarParadas();
+							Set<Parada> paradas = Utiles.mostrarParadas();
 							for (Parada parada : paradas) {
 								System.out.println(parada.toString());
 							}
-							System.out.println("Introduce el id de la parada en la que estas:");	
+							System.out.println("Introduce el id de la parada en la que estas:");
 							paradaIni = leer.nextLong();
-							 paradaInicial = ParadaDAO.getParadaDAO().seleccionarParada(paradaIni);
-							
+							paradaInicial = ParadaDAO.getParadaDAO().seleccionarParada(paradaIni);
+
 						} catch (InputMismatchException e) {
 							System.out.println("Solo se permiten numeros enteros");
 							leer.nextLine();
 						}
-						if(Utiles.existeParadaPorID(paradaIni)) {
-						
+						if (Utiles.existeParadaPorID(paradaIni)) {
+
 							valido = true;
 						} else
 							System.out.println("Parada no reconocida");
@@ -203,9 +201,10 @@ public class Menus {
 				char region;
 				boolean existe;
 				do {
+					leer.nextLine();
 					System.out.println("--Registro de Parada y Responsable--");
 					System.out.println("Introduzca el nombre de la Parada:");
-					nombreParada = leer.next();
+					nombreParada = leer.nextLine();
 					System.out.println("Introduzca la región de la Parada:");
 					region = leer.next().charAt(0);
 					existe = Utiles.existeParada(nombreParada, region);
@@ -314,65 +313,72 @@ public class Menus {
 			LocalDate fechaInicio = null;
 			LocalDate fechaFin = null;
 			switch (opc) {
+
 			case 1:
+				boolean seguro = false;
+				
 				leer.nextLine();
 				System.out.println("Sellar carnet/alojarse");
-				boolean seguro = false;
-				Presentaciones.mostrarParada(actual);
+			
 				do {
-					System.out.println("introduce el id del peregrino");
+					System.out.println("Introduce el id del peregrino:");
 					Utiles.mostrarPeregrinos();
 					try {
 						idPeregrino = leer.nextLong();
-
-					} catch (InputMismatchException e) {
-						System.out.println("solo se permiten enteros");
-						leer.nextLine();
-					}
-					if (!Utiles.existePeregrino(idPeregrino)) {
-						System.out.println("El peregrino no existe introduce otro id");
-					} else {
-						valido = true;
-					}
-
-				} while (!valido);
-				valido = false;
-				Peregrino peregrino = Utiles.obtenerPeregrino(idPeregrino);
-				Carnet carnet = Utiles.conseguirCarnet(peregrino);
-				System.out.println(peregrino.toString()+"\n");
-				System.out.println(carnet.toString());
-				boolean sellado = Utiles.carnetPeregrinoSellado(peregrino, actual, LocalDate.now());
-				if (!sellado) {
-					System.out.println("Primera vez en esta parada");
-					System.out.println("Se estancia el peregrino? si/no");
-					boolean respuesta = Utiles.leerBoolean();
-					do {
-
-						if (!respuesta) {
-							System.out.println("No se estancia");
-							break;
-						} else
-							System.out.println("Va a ser una estacia vip? si/no");
-						boolean respuestaVip = Utiles.leerBoolean();
-						System.out.println(respuestaVip);
-						if (respuestaVip) {
-							ControladorSellos.guardarEstancia(peregrino, actual, respuestaVip, fechaFin);
-							ControladorSellos.sellarCarnet(peregrino, respuestaVip);
-
-							if (!ControladorSellos.sellarCarnet(peregrino, respuestaVip)) {
-								System.out.println("Ha ocurrido un error");
-								break;
-							}
+						leer.nextLine(); 
+						if (!Utiles.existePeregrino(idPeregrino)) {
+							System.out.println("El peregrino no existe, introduce otro id");
 						} else {
-							ControladorSellos.sellarCarnet(peregrino, respuesta);
+							valido = true;
 						}
-						System.out.println("Carnet sellado y actualizado "+peregrino.getCarnet().toString());
-						valido = true;
-					} while (!valido);
-					valido = false;
-				} else
+					} catch (InputMismatchException e) {
+						System.out.println("Solo se permiten enteros");
+						leer.nextLine(); 
+					}
+				} while (!valido);
+
+				Peregrino peregrino = Utiles.obtenerPeregrino(idPeregrino);
+				System.out.println(peregrino.toString() + "\n");
+
+				boolean sellado = Utiles.carnetPeregrinoSellado(peregrino, actual, LocalDate.now());
+				if (sellado) {
 					System.out.println(
-							"Este peregrino ya estuvo hoy en la parada, por la tanto no puede ser sellado hoy");
+							"Este peregrino ya estuvo hoy en la parada, por lo tanto no puede ser sellado hoy");
+					break;
+				}
+
+				System.out.println("Primera vez en esta parada");
+				System.out.println("¿Se estancia el peregrino? (si/no)");
+				boolean seEstancia = Utiles.leerBoolean(); 
+				if (!seEstancia) {
+					System.out.println("No se realiza la estancia");
+					break;
+				}
+
+				System.out.println("¿Va a ser una estancia VIP? (si/no)");
+				boolean vip = Utiles.leerBoolean();
+
+				if (vip) {
+					boolean guardado = ControladorSellos.guardarEstancia(peregrino, actual, true, LocalDate.now());
+					if (!guardado) {
+						System.out.println("Error al guardar la estancia VIP");
+						break;
+					}
+					boolean selladoResult = ControladorSellos.sellarCarnet(peregrino, true);
+					if (!selladoResult) {
+						System.out.println("Ha ocurrido un error al sellar el carnet VIP");
+						break;
+					}
+				} else {
+					boolean guardado = ControladorSellos.guardarEstancia(peregrino, actual, false, LocalDate.now());
+					boolean selladoResult = ControladorSellos.sellarCarnet(peregrino, false);
+					if (!selladoResult) {
+						System.out.println("Ha ocurrido un error al sellar el carnet");
+						break;
+					}
+				}
+				VisitadasDAO.getVisitadasDAO().insertarVisita(peregrino, ParadaDAO.getParadaDAO().obtenerParada(actual));
+				System.out.println("Carnet sellado y actualizado: " + peregrino.getCarnet().toString());
 				break;
 
 			case 2:
@@ -381,66 +387,67 @@ public class Menus {
 				seguro = false;
 				boolean afirma = false;
 				do {
+
 					Presentaciones.mostrarParada(actual);
+
 					do {
-						System.out.println("Introduzca una fecha inicial yyyy-MM-dd");
+						System.out.println("Introduzca una fecha inicial (yyyy-MM-dd):");
 						String primeraFecha = leer.nextLine();
 						if (Utiles.fechaValida(primeraFecha)) {
 							fechaInicio = LocalDate.parse(primeraFecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 							valido = true;
-						} else
-							System.out.println("fecha no valida");
+						} else {
+							System.out.println("Fecha no válida");
+						}
 					} while (!valido);
-
 					valido = false;
+
 					do {
 						System.out.println(
-								"Introduzca una fecha final yyyy-mm-dd, si queda en blanco se pondra la fecha de hoy");
+								"Introduzca una fecha final (yyyy-MM-dd). Si queda en blanco se pondrá la fecha de hoy:");
 						String segundaFecha = leer.nextLine();
-
-						if (Utiles.fechaValida(segundaFecha)) {
-							fechaFin = LocalDate.parse(segundaFecha);
-						} else if (fechaInicio.isAfter(fechaFin)) {
-							System.out.println("La fecha final no puede ser anterior a la fecha de inicio");
-						} else if (!Utiles.fechaValida(segundaFecha)) {
-							System.out.println("formato de fecha incorrecto");
-						} else {
-							valido = true;
-						}
-
-						if (segundaFecha.isBlank()) {
+						if (segundaFecha.isEmpty()) {
 							fechaFin = LocalDate.now();
-						} else if (fechaInicio.isAfter(fechaFin)) {
-							System.out.println("La fecha final no puede ser anterior a la fecha de inicio");
-						} else {
 							valido = true;
+						} else if (Utiles.fechaValida(segundaFecha)) {
+							fechaFin = LocalDate.parse(segundaFecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+							if (fechaInicio.isAfter(fechaFin)) {
+								System.out.println("La fecha final no puede ser anterior a la fecha de inicio");
+								valido = false;
+							} else {
+								valido = true;
+							}
+						} else {
+							System.out.println("Formato de fecha incorrecto");
 						}
 					} while (!valido);
+					valido = false;
 
 					System.out.println(
-							"Fecha inicial: " + fechaInicio + "\nFecha final: " + fechaFin + ". ¿Esta seguro? (si/no)");
-					do {
-						String respuesta = leer.next();
-						if (respuesta.equalsIgnoreCase("si")) {
-							afirma = true;
-						} else if (respuesta.equalsIgnoreCase("no")) {
-							afirma = false;
-							seguro = true;
-						} else {
-							System.out.println("Escriba una opción válida");
-						}
-					} while (!afirma && !afirma);
+							"Fecha inicial: " + fechaInicio + "\nFecha final: " + fechaFin + ". ¿Está seguro? (si/no)");
+					String respuesta = leer.nextLine();
+					while (!respuesta.equalsIgnoreCase("si") && !respuesta.equalsIgnoreCase("no")) {
+						System.out.println("Escriba una opción válida (si/no):");
+						respuesta = leer.nextLine();
+					}
+					if (respuesta.equalsIgnoreCase("si")) {
+						afirma = true;
+					} else {
+						afirma = false;
+						seguro = true;
+					}
 
 					if (afirma) {
 						ControladorExportar.exportarParada(actual, fechaInicio, fechaFin);
-						System.out.println("\n Quiere realizar otra exportacion? (si/no)");
-						String afirmacion = leer.next();
-						if (afirmacion.equalsIgnoreCase("no"))
+						System.out.println("\n¿Quiere realizar otra exportación? (si/no)");
+						String afirmacion = leer.nextLine();
+						if (afirmacion.equalsIgnoreCase("no")) {
 							seguro = true;
+						}
 					}
-
 				} while (!seguro);
 				break;
+
 			case 0:
 				System.out.println("Hasta la proxima.");
 				MenuInvitado();

@@ -34,25 +34,28 @@ public class VisitadasDAO {
 		boolean insertada = false;
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("insert into visitadas (idPeregrino, idParada, fecha) values (?, ?, ?)");
-			ps.setLong(1, peregrino.getId());
-			ps.setLong(2, parada.getId());
-			ps.setDate(3, Date.valueOf(LocalDate.now()));
+			ps = con.prepareStatement("insert into visitadas(idPeregrino, idParada ) values('28','29')"); ///, fecha) values (?, ?, ?)");
+//			ps.setLong(1, peregrino.getId());
+//			ps.setLong(2, parada.getId());
+		//	Date fecha =Date.valueOf(LocalDate.now());
+		//	ps.setDate(3, fecha);
 			
 			ps.executeUpdate();
+			ps.close();
 			insertada = true;
 		}catch(SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 		return insertada;
 	}
 	
-	public Set<Parada> paradasVisitadas(Peregrino peregrino){
+	public Set<Parada> paradasVisitadas(long id){
 		Set<Parada> listaParadas = new HashSet<Parada>();
 		PreparedStatement ps;
 		try {
 			ps = con.prepareStatement("select idParada, fecha from visitadas where idPeregrino = ?");
-			ps.setLong(1, peregrino.getId());
+			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Parada parada = new Parada();
@@ -71,13 +74,16 @@ public class VisitadasDAO {
 		Set<Visita> listaVisitas = new HashSet<Visita>();
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("select idParada, fecha from visitadas where idPeregrino = ?");
+			ps = con.prepareStatement("select idPeregrino, idParada, fecha from visitadas where idPeregrino = ?");
 			ps.setLong(1, peregrino.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Visita visita = new Visita();
+				
+				visita.setIdPeregrino(rs.getLong("idPeregrino"));
 				visita.setIdParada(rs.getLong("idParada"));
 				visita.setFecha(rs.getDate("fecha").toLocalDate());
+				
 				listaVisitas.add(visita);
 			}
 			rs.close();
@@ -86,5 +92,26 @@ public class VisitadasDAO {
 			e.printStackTrace();
 		}
 		return listaVisitas;
+	}
+	
+	public Visita visitaPeregrino(Peregrino peregrino, LocalDate hoy){
+		Visita visita = new Visita();
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("select idParada, fecha from visitadas where idPeregrino = ? and fecha = ?");
+			ps.setLong(1, peregrino.getId());
+			ps.setDate(2, Date.valueOf(hoy) );
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				visita.setIdPeregrino(peregrino.getId());
+				visita.setIdParada(rs.getLong("idParada"));
+				visita.setFecha(rs.getDate("fecha").toLocalDate());			
+			}
+			rs.close();
+			ps.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return visita;
 	}
 }

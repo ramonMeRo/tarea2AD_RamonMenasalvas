@@ -24,7 +24,6 @@ import org.w3c.dom.Text;
 
 import dao.EstanciaDAO;
 import dao.ParadaDAO;
-import dao.PeregrinoDAO;
 import entidades.Estancia;
 import entidades.Parada;
 import entidades.Peregrino;

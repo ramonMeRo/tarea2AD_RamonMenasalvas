@@ -9,6 +9,7 @@ import java.util.Set;
 
 import bd.ConexionBD;
 import entidades.Carnet;
+import entidades.Parada;
 import entidades.Peregrino;
 import entidades.Usuario;
 
@@ -80,6 +81,7 @@ public class PeregrinoDAO {
 	}
 
 	public Peregrino seleccionarPeregrino(long id) {
+		Set<Parada> paradas = new HashSet<Parada>();
 		Peregrino peregrino = new Peregrino();
 		PreparedStatement ps;
 		try {
@@ -91,6 +93,8 @@ public class PeregrinoDAO {
 				peregrino.setNombre(rs.getString("nombreCompleto"));
 				peregrino.setNacionalidad(rs.getString("nacionalidad"));
 				peregrino.setCarnet(CarnetDAO.getCarnetDAO().obtenerCarnet(rs.getLong("idCarnet")));
+				paradas = VisitadasDAO.getVisitadasDAO().paradasVisitadas(id);
+				peregrino.setParadas(paradas);
 			}
 			rs.close();
 			ps.close();
@@ -155,7 +159,7 @@ public class PeregrinoDAO {
 				peregrino.setNombre(rs.getString("nombre"));
 				peregrino.setNacionalidad(rs.getString("nacionalidad"));
 				peregrino.setCarnet(CarnetDAO.getCarnetDAO().obtenerCarnet(rs.getLong("idCarnet")));
-				peregrino.setParadas(VisitadasDAO.getVisitadasDAO().paradasVisitadas(peregrino));
+				peregrino.setParadas(VisitadasDAO.getVisitadasDAO().paradasVisitadas(peregrino.getId()));
 				peregrino.setEstancias(EstanciaDAO.getEstanciaDAO().obtenerEstanciasDePeregrino(peregrino));
 			}
 			rs.close();
