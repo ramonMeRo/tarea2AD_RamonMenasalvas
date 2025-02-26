@@ -102,7 +102,6 @@ public class PeregrinoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 	

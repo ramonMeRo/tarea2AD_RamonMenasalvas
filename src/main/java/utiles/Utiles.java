@@ -41,7 +41,7 @@ public class Utiles {
 
 	public static boolean existePeregrino(long id) {
 		Peregrino peregrino = PeregrinoDAO.getPeregrinoDAO().seleccionarPeregrino(id);
-		if (peregrino != null)
+		if (peregrino.getId() != null)
 			return true;
 		else
 			return false;

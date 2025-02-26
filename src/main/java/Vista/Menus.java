@@ -40,7 +40,7 @@ public class Menus {
 
 			case 1:
 				System.out.println("--Login--");
-				
+				do {
 					System.out.println("Introduzca su nombre de usuario:");
 					String nombreUsuario = leer.next();
 					System.out.println("Introduzca su contraseña:");
@@ -63,8 +63,10 @@ public class Menus {
 						} else {
 							actual = new Usuario();
 							System.out.println("Usuario y/o contraseña incorrectos");
+							
 						}
 					}
+				} while (actual.getPerfil().equals(Perfil.INVITADO));
 
 				break;
 			case 2:

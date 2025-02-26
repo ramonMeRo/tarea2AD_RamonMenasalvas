@@ -34,11 +34,11 @@ public class VisitadasDAO {
 		boolean insertada = false;
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("insert into visitadas(idPeregrino, idParada ) values('28','29')"); ///, fecha) values (?, ?, ?)");
-//			ps.setLong(1, peregrino.getId());
-//			ps.setLong(2, parada.getId());
-		//	Date fecha =Date.valueOf(LocalDate.now());
-		//	ps.setDate(3, fecha);
+			ps = con.prepareStatement("insert into visitadas(idPeregrino, idParada , fecha) values (?, ?, ?)");
+			ps.setLong(1, peregrino.getId());
+			ps.setLong(2, parada.getId());
+			Date fecha =Date.valueOf(LocalDate.now());
+			ps.setDate(3, fecha);
 			
 			ps.executeUpdate();
 			ps.close();

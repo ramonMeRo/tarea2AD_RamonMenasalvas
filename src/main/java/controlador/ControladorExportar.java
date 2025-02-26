@@ -153,7 +153,6 @@ public class ControladorExportar {
 		if (fechaInicio.isBefore(fechaFin)) {
 			Parada parada = ParadaDAO.getParadaDAO().obtenerParada(usuario);
 			Set<Estancia> lista = EstanciaDAO.getEstanciaDAO().obtenerEstanciasEnParada(parada);
-			System.out.println(parada.toString() + "\n");
 			for (Estancia estancia : lista) {
 				if (estancia.getFecha().isAfter(fechaInicio) && estancia.getFecha().isBefore(fechaFin))
 					System.out.println(estancia.toString() + "\n");
