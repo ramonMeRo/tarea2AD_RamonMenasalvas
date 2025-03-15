@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xml" href="test.xsl"?>
+<Carnet>
+	<id>2</id>
+	<fechaExp>2025-02-27</fechaExp>
+	<expedidoEn>aviles</expedidoEn>
+	<peregrino>
+		<nombre>david el listo</nombre>
+		<nacionalidad>Principado de Liechtenstein</nacionalidad>
+	</peregrino>
+	<hoy>2025-02-27</hoy>
+	<distanciaTotal>10.0</distanciaTotal>
+	<paradas>
+		<parada>
+			<orden>1</orden>
+			<nombreP>gijon</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>2</orden>
+			<nombreP>oviedo</nombreP>
+			<region>a</region>
+		</parada>
+	</paradas>
+	<estancias>
+		<estancia>
+			<idE>5</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>oviedo</paradaE>
+		</estancia>
+		<estancia>
+			<idE>6</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>oviedo</paradaE>
+		</estancia>
+		<estancia>
+			<idE>7</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>gijon</paradaE>
+			<vip />
+		</estancia>
+	</estancias>
+</Carnet>

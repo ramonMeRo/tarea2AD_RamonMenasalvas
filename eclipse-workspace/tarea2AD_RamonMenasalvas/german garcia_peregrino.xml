@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xml" href="test.xsl"?>
+<Carnet>
+	<id>3</id>
+	<fechaExp>2025-02-27</fechaExp>
+	<expedidoEn>aviles</expedidoEn>
+	<peregrino>
+		<nombre>german garcia</nombre>
+		<nacionalidad>España</nacionalidad>
+	</peregrino>
+	<hoy>2025-02-27</hoy>
+	<distanciaTotal>10.0</distanciaTotal>
+	<paradas>
+		<parada>
+			<orden>1</orden>
+			<nombreP>aviles</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>2</orden>
+			<nombreP>madrid</nombreP>
+			<region>m</region>
+		</parada>
+		<parada>
+			<orden>3</orden>
+			<nombreP>barcelona</nombreP>
+			<region>b</region>
+		</parada>
+	</paradas>
+	<estancias>
+		<estancia>
+			<idE>8</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>madrid</paradaE>
+			<vip />
+		</estancia>
+		<estancia>
+			<idE>9</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>barcelona</paradaE>
+		</estancia>
+	</estancias>
+</Carnet>

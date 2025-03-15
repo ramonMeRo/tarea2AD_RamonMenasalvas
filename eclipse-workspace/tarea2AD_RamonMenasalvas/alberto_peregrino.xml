@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xml" href="test.xsl"?>
+<Carnet>
+	<id>16</id>
+	<fechaExp>2024-11-04</fechaExp>
+	<expedidoEn>Parada [id=17, nombre=mieres, region=a, responsable=dani,
+		numPeregrinos=[]]</expedidoEn>
+	<peregrino>
+		<nombre>alberto</nombre>
+		<nacionalidad />
+	</peregrino>
+	<hoy>2025-01-10</hoy>
+	<distanciaTotal>25.0</distanciaTotal>
+	<paradas>
+		<parada>
+			<orden>1</orden>
+			<nombreP>mieres</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>2</orden>
+			<nombreP>oviedo</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>3</orden>
+			<nombreP>gijon</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>4</orden>
+			<nombreP>lugones</nombreP>
+			<region>a</region>
+		</parada>
+		<parada>
+			<orden>5</orden>
+			<nombreP>candas</nombreP>
+			<region>a</region>
+		</parada>
+	</paradas>
+	<estancias>
+		<estancia>
+			<idE>4</idE>
+			<fecha>2024-11-05</fecha>
+			<paradaE>gijon</paradaE>
+			<vip />
+		</estancia>
+		<estancia>
+			<idE>6</idE>
+			<fecha>2024-11-07</fecha>
+			<paradaE>mieres</paradaE>
+		</estancia>
+		<estancia>
+			<idE>7</idE>
+			<fecha>2024-11-08</fecha>
+			<paradaE>oviedo</paradaE>
+			<vip />
+		</estancia>
+		<estancia>
+			<idE>3</idE>
+			<fecha>2024-11-04</fecha>
+			<paradaE>candas</paradaE>
+			<vip />
+		</estancia>
+		<estancia>
+			<idE>5</idE>
+			<fecha>2024-11-06</fecha>
+			<paradaE>lugones</paradaE>
+		</estancia>
+	</estancias>
+</Carnet>

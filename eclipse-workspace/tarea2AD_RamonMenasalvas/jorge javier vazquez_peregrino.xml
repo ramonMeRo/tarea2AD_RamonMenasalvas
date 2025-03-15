@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xml" href="test.xsl"?>
+<Carnet>
+	<id>23</id>
+	<fechaExp>2025-02-27</fechaExp>
+	<expedidoEn>mieres</expedidoEn>
+	<peregrino>
+		<nombre>jorge javier vazquez</nombre>
+		<nacionalidad>Reino Unido</nacionalidad>
+	</peregrino>
+	<hoy>2025-02-27</hoy>
+	<distanciaTotal>0.0</distanciaTotal>
+	<paradas>
+		<parada>
+			<orden>1</orden>
+			<nombreP>madrid</nombreP>
+			<region>m</region>
+		</parada>
+		<parada>
+			<orden>2</orden>
+			<nombreP>gijon</nombreP>
+			<region>a</region>
+		</parada>
+	</paradas>
+	<estancias>
+		<estancia>
+			<idE>19</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>gijon</paradaE>
+		</estancia>
+		<estancia>
+			<idE>18</idE>
+			<fecha>2025-02-27</fecha>
+			<paradaE>madrid</paradaE>
+			<vip />
+		</estancia>
+	</estancias>
+</Carnet>
