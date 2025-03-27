@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -43,7 +44,6 @@ public class EstanciaDAO {
 			ps.setBoolean(4, estancia.isVip());
 			
 			ps.executeUpdate();
-			con.commit();
 			ps.close();
 			insertada = true;
 			
@@ -80,16 +80,19 @@ public class EstanciaDAO {
 		return null;
 	}
 	
-	public Set<Estancia> obtenerEstanciasEnParada(Parada parada){
+	public Set<Estancia> obtenerEstanciasEnParada(Parada parada, LocalDate fechaInicio, LocalDate fechaFinal){
 		Set<Estancia> listaEstancias = new HashSet<Estancia>();
 		PreparedStatement ps;
 		try {
-			ps = con.prepareStatement("select id, idPeregrino, fecha, vip from estancias where idParada = ?");
+			ps = con.prepareStatement("select id, idPeregrino, fecha, vip from estancias where idParada = ? and fecha between ? and ?");
 			ps.setLong(1, parada.getId());
+			ps.setDate(2, Date.valueOf(fechaInicio));
+			ps.setDate(3, Date.valueOf(fechaFinal));
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Estancia estancia = new Estancia();
 				estancia.setId(rs.getLong("id"));
+				estancia.setParada(parada);
 				estancia.setPeregrino(PeregrinoDAO.getPeregrinoDAO().seleccionarPeregrinoEstancia(rs.getLong("idPeregrino")));
 				estancia.setFecha(rs.getDate("fecha").toLocalDate());
 				estancia.setVip(rs.getBoolean("vip"));

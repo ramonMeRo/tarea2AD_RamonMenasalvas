@@ -35,14 +35,14 @@ public class ParadaDAO {
 				if (con == null || con.isClosed())
 					con = ConexionBD.getInstance().getConnection();
 
-				ps = con.prepareStatement("insert into paradas (idResponsable, nombre, region) values (?,?,?)");
-				ps.setLong(1, obtenerIdResponsable(parada.getResponsable()));
-				ps.setString(2, parada.getNombre());
-				ps.setString(3, String.valueOf(parada.getRegion()));
+				ps = con.prepareStatement("insert into paradas (responsable,idResponsable, nombre, region) values (?,?,?,?)");
+				ps.setString(1, parada.getResponsable());
+				ps.setLong(2, obtenerIdResponsable(parada.getUsuario()));
+				ps.setString(3, parada.getNombre());
+				ps.setString(4, String.valueOf(parada.getRegion()));
 				ps.executeUpdate();
 
 				insertada = true;
-				con.commit();
 				ps.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -99,12 +99,13 @@ public class ParadaDAO {
 		Connection con = conexion.getConnection();
 		try {
 			ps = con.prepareStatement(
-					"select p.id, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id");
+					"select p.id, p.responsable, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Parada parada = new Parada();
 				parada.setId(rs.getLong("p.id"));
-				parada.setResponsable(rs.getString("u.nombre"));
+				parada.setResponsable(rs.getString("p.responsable"));
+				parada.setUsuario("u.nombre");
 				parada.setNombre(rs.getString("p.nombre"));
 				parada.setRegion(rs.getString("p.region").charAt(0));
 				listaParadas.add(parada);
@@ -125,12 +126,13 @@ public class ParadaDAO {
 		Connection con = conexion.getConnection();
 		try {
 			ps = con.prepareStatement(
-					"select p.id, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id");
+					"select p.id, p.responsable, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Parada parada = new Parada();
 				parada.setId(rs.getLong("p.id"));
-				parada.setResponsable(rs.getString("u.nombre"));
+				parada.setResponsable(rs.getString("p.responsable"));
+				parada.setUsuario("u.nombre");
 				parada.setNombre(rs.getString("p.nombre"));
 				parada.setRegion(rs.getString("p.region").charAt(0));
 				listaParadas.add(parada);
@@ -151,12 +153,13 @@ public class ParadaDAO {
 		Connection con = conexion.getConnection();
 		try {
 			ps = con.prepareStatement(
-					"select p.id, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id where u.id = ?");
+					"select p.id, p.responsable, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id where u.id = ?");
 			ps.setLong(1, usuario.getId());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				parada.setId(rs.getLong("p.id"));
-				parada.setResponsable(rs.getString("u.nombre"));
+				parada.setResponsable(rs.getString("p.responsable"));
+				parada.setUsuario("u.nombre");
 				parada.setNombre(rs.getString("p.nombre"));
 				parada.setRegion(rs.getString("p.region").charAt(0));
 
@@ -177,13 +180,14 @@ public class ParadaDAO {
 		Connection con = conexion.getConnection();
 		try {
 			ps = con.prepareStatement(
-					"select p.id, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id where p.id = ?");
+					"select p.id, p.responsable, u.nombre, p.nombre, p.region from paradas p inner join usuarios u on p.idResponsable = u.id where p.id = ?");
 			ps.setLong(1, id);
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				parada.setId(rs.getLong("p.id"));
-				parada.setResponsable(rs.getString("u.nombre"));
+				parada.setResponsable(rs.getString("p.responsable"));
+				parada.setUsuario("u.nombre");
 				parada.setNombre(rs.getString("p.nombre"));
 				parada.setRegion(rs.getString("p.region").charAt(0));
 			}

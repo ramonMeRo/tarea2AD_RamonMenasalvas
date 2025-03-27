@@ -179,13 +179,13 @@ public class Menus {
 				break;
 			case 0:
 				System.out.println("Hasta la proxima");
+				System.exit(0);
 				break;
 			default:
 				System.out.println("Opcion invalida, escoja una opcion valida");
 				break;
 			}
 		} while (opc != 0);
-		leer.close();
 	}
 
 	public static void MenuAdmin() {
@@ -208,17 +208,31 @@ public class Menus {
 					System.out.println("Introduzca el nombre de la Parada:");
 					nombreParada = leer.nextLine();
 					System.out.println("Introduzca la región de la Parada:");
-					region = leer.next().charAt(0);
+					region = leer.next().trim().charAt(0);
 					existe = Utiles.existeParada(nombreParada, region);
 					if (existe)
 						System.out.println("Error ya existe esa parada");
 				} while (existe);
 
+				String responsable;
 				String nombreResponsable;
 				String password;
 				boolean registrado;
 				do {
 					boolean valido = false;
+					leer.nextLine();
+					do {
+						System.out.println("Introduzca el nombre del Responsable:");
+						responsable = leer.nextLine();
+
+						if (responsable.isEmpty()) {
+							System.out.println("El responsable debe tener un nombre");
+						} else {
+							valido = true;
+						}
+					} while (!valido);
+					valido = false;
+					leer.nextLine();
 					do {
 						System.out.println("Introduzca el nombre del Responsable:"
 								+ "tenga en cuenta que un nombre compuesto no debe tener espacios");
@@ -229,19 +243,21 @@ public class Menus {
 							System.out.println("El nombre de usuario esta en uso");
 						} else if (nombreResponsable.contains(" ")) {
 							System.out.println("El nombre de usuario puede tener espacios en blanco");
-						} else
+						} else {
 							valido = true;
+						}
 					} while (!valido);
 
 					valido = false;
 					do {
 						System.out.println("Introduzca la contraseña del Responsable:");
-						password = leer.next();
+						password = leer.nextLine();
 
 						if (password.contains(" ")) {
 							System.out.println("La contraseña no puede tener espacios en blanco");
-						} else
+						} else {
 							valido = true;
+						}
 					} while (!valido);
 					registrado = ControladorRegistro.registrarResponsable(nombreResponsable, password);
 					if (!registrado) {
@@ -249,7 +265,7 @@ public class Menus {
 					}
 				} while (!registrado);
 
-				ControladorRegistro.registrarParada(nombreParada, region, nombreResponsable);
+				ControladorRegistro.registrarParada(nombreParada, region, responsable, nombreResponsable);
 				break;
 			case 0:
 				System.out.println("Hasta la proxima.");
@@ -366,8 +382,7 @@ public class Menus {
 						System.out.println("Error al guardar la estancia VIP");
 						break;
 					}
-					
-					
+
 					boolean selladoResult = ControladorSellos.sellarCarnet(carnet, true);
 					if (!selladoResult) {
 						System.out.println("Ha ocurrido un error al sellar el carnet VIP");

@@ -7,6 +7,7 @@ import java.util.Set;
 public class Parada {
 
 	private Long id;
+	private String Usuario;
 	private String nombre;
 	private char region;
 	private String responsable;
@@ -16,15 +17,10 @@ public class Parada {
 
 	}
 
-	public Parada(Long id, String nombre, char region, String responsable) {
+	public Parada(Long id, String usuario, String nombre, char region, String responsable,
+			Set<Peregrino> numPeregrinos) {
 		this.id = id;
-		this.nombre = nombre;
-		this.region = region;
-		this.responsable = responsable;
-	}
-
-	public Parada(Long id, String nombre, char region, String responsable, Set<Peregrino> numPeregrinos) {
-		this.id = id;
+		Usuario = usuario;
 		this.nombre = nombre;
 		this.region = region;
 		this.responsable = responsable;
@@ -37,6 +33,14 @@ public class Parada {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUsuario() {
+		return Usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		Usuario = usuario;
 	}
 
 	public String getNombre() {
@@ -73,7 +77,7 @@ public class Parada {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nombre, numPeregrinos, region, responsable);
+		return Objects.hash(Usuario, id, nombre, numPeregrinos, region, responsable);
 	}
 
 	@Override
@@ -85,15 +89,15 @@ public class Parada {
 		if (getClass() != obj.getClass())
 			return false;
 		Parada other = (Parada) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(numPeregrinos, other.numPeregrinos) && region == other.region
-				&& Objects.equals(responsable, other.responsable);
+		return Objects.equals(Usuario, other.Usuario) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(numPeregrinos, other.numPeregrinos)
+				&& region == other.region && Objects.equals(responsable, other.responsable);
 	}
 
 	@Override
 	public String toString() {
-		return "Parada [id=" + id + ", nombre=" + nombre + ", region=" + region + ", responsable=" + responsable
-				+ ", numPeregrinos=" + numPeregrinos + "]";
+		return "Parada [id=" + id + ", nombre=" + nombre + ", region=" + region
+				+ ", responsable=" + responsable + ", numPeregrinos=" + numPeregrinos + "]";
 	}
 
 }

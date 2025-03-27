@@ -16,13 +16,13 @@ import entidades.Usuario;
 
 public class ControladorRegistro {
 
-	public static Peregrino RegistrarPeregrino(String nombre, String nombreUsuario, String password, String nacionalidad,
-			Long paradaInicial) {
+	public static Peregrino RegistrarPeregrino(String nombre, String nombreUsuario, String password,
+			String nacionalidad, Long paradaInicial) {
 
 		if (UsuarioDAO.getUsuarioDAO().comprobarUsuario(nombreUsuario) != null) {
 			return null;
 		}
-		
+
 		Usuario usuario = new Usuario();
 		usuario.setNombre(nombreUsuario);
 		usuario.setPassword(password);
@@ -39,7 +39,7 @@ public class ControladorRegistro {
 
 		Set<Parada> paradas = new HashSet<Parada>();
 		paradas.add(p1);
-		
+
 		Peregrino peregrino = new Peregrino();
 		peregrino.setNombre(nombre);
 		peregrino.setNacionalidad(nacionalidad);
@@ -54,10 +54,15 @@ public class ControladorRegistro {
 		return peregrino;
 	}
 
-	public static Parada registrarParada(String nombre, char region, String responsable) {
+	public static Parada registrarParada(String nombre, char region, String responsable, String usuario) {
 
 		if (!ParadaDAO.getParadaDAO().compararParada(nombre, region)) {
-			Parada parada = new Parada(ParadaDAO.getParadaDAO().obtenerIdParada(), nombre, region, responsable);
+			Parada parada = new Parada();
+			parada.setId(ParadaDAO.getParadaDAO().obtenerIdParada());
+			parada.setNombre(nombre);
+			parada.setResponsable(responsable);
+			parada.setUsuario(usuario);
+			parada.setRegion(region);
 			ParadaDAO.getParadaDAO().insertarParada(parada);
 			return parada;
 		} else

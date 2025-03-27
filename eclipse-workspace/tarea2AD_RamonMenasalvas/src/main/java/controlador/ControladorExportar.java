@@ -148,16 +148,16 @@ public class ControladorExportar {
 
 	}
 
-
 	public static void exportarParada(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin) {
-		if (fechaInicio.isBefore(fechaFin)) {
+		if (fechaInicio.isBefore(fechaFin) || fechaInicio.equals(fechaFin)) {
 			Parada parada = ParadaDAO.getParadaDAO().obtenerParada(usuario);
-			Set<Estancia> lista = EstanciaDAO.getEstanciaDAO().obtenerEstanciasEnParada(parada);
+			Set<Estancia> lista = EstanciaDAO.getEstanciaDAO().obtenerEstanciasEnParada(parada, fechaInicio, fechaFin);
 			for (Estancia estancia : lista) {
-				if (estancia.getFecha().isAfter(fechaInicio) && estancia.getFecha().isBefore(fechaFin))
-					System.out.println(estancia.toString() + "\n");
+				 
+						System.out.println(estancia.toString() + "\n");
+				
+				System.out.println("entre: " + fechaInicio + " y " + fechaFin);
 			}
-			System.out.println("entre: " + fechaInicio + " y " + fechaFin);
 		}
 	}
 }

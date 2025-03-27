@@ -41,7 +41,6 @@ public class CarnetDAO {
 			ps.setInt(4, carnet.getnVips());
 			ps.executeUpdate();
 
-			con.commit();
 			ps.close();
 			insertado = true;
 
@@ -108,7 +107,7 @@ public class CarnetDAO {
 			} else
 				ps.setInt(2, carnet.getnVips());
 			
-			con.commit();
+		
 			ps.executeUpdate();
 			ps.close();
 

@@ -33,7 +33,7 @@ public class PeregrinoDAO {
 		boolean insertado = false;
 		PreparedStatement ps;
 		try {
-			con.setAutoCommit(false);
+			
 			ps = con.prepareStatement(
 					"insert into peregrinos (idUsuario, idCarnet, nombreCompleto, nacionalidad) values (?, ?, ?, ?)");
 			ps.setLong(1, user.getId());
@@ -42,7 +42,6 @@ public class PeregrinoDAO {
 			ps.setString(4, peregrino.getNacionalidad());
 			ps.executeUpdate();
 
-			con.commit();
 			ps.close();
 			insertado = true;
 

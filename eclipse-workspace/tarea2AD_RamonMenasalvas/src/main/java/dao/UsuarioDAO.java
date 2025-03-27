@@ -39,7 +39,6 @@ public class UsuarioDAO {
 					ps.setString(3, String.valueOf(usuario.getPerfil()));
 					
 					ps.executeUpdate();
-					con.commit();
 					ps.close();
 				}
 

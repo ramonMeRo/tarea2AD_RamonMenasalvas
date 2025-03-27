@@ -43,7 +43,7 @@ public class VisitadasDAO {
 			int num = ps.executeUpdate();
 			System.out.println(num);
 			
-			con.commit();
+			
 			ps.close();
 			insertada = true;
 		}catch(SQLException e) {
